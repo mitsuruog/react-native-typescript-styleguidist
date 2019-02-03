@@ -9,9 +9,8 @@
 import React from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
 
-import Icon from 'react-native-vector-icons/FontAwesome';
-
 import { Button } from './src/shared/components/button/Button';
+import { Icon } from './src/shared/components/icon/Icon';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
