@@ -1,4 +1,5 @@
 const webpack = require('webpack');
+const path = require('path');
 
 // See: https://github.com/styleguidist/react-docgen-typescript#parseroptions
 const parserOptions = {};
@@ -6,27 +7,25 @@ const parserOptions = {};
 module.exports = {
   require: ['@babel/polyfill'],
   ignore: ['**/*.{spec,style}.{ts,tsx}'],
-  sections: [
-    {
-      name: 'UI Components',
-      components: 'src/shared/components/**/*.{ts,tsx}',
-      exampleMode: 'expand', // 'hide' | 'collapse' | 'expand'
-      usageMode: 'expand' // 'hide' | 'collapse' | 'expand'
-    }
-  ],
+  styleguideComponents: {
+    Wrapper: path.join(__dirname, 'src/Wrapper')
+  },
+  components: 'src/shared/components/**/*.{ts,tsx}',
   webpackConfig: {
     resolve: {
       alias: {
-        'react-native': 'react-native-web'
+        'react-native': 'react-native-web',
+        // 'react-native-vector-icons': 'react-native-web-vector-icons'
       },
       extensions: ['.web.js', '.js', '.ts', '.web.ts', '.tsx', '.web.tsx'],
     },
     module: {
       rules: [
         {
-          test: /\.tsx?$/,
+          test: /\.(js|tsx?)$/,
           loader: 'babel-loader',
           options: {
+            ignore: [/[\/\\]core-js/, /@babel[\/\\]runtime/],
             plugins: [
               '@babel/proposal-class-properties',
               '@babel/proposal-object-rest-spread',
@@ -61,6 +60,7 @@ module.exports = {
         {
           test: /\.ttf$/,
           loader: 'file-loader',
+          include: path.resolve(__dirname, 'node_modules/react-native-vector-icons/Fonts'),
         },
       ],
     },
